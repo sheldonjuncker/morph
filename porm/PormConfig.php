@@ -2,7 +2,7 @@
 
 /*
 	Author:	Sheldon Juncker
-	Date:	4/3/2016
+	Date:	5/2/2016
 	Desc:	
 	The PormConfig class which is part of the
 	Porm namespace is used to store the configuration
@@ -21,7 +21,7 @@
 class PormConfig
 {
 	//Default Database
-	static $default = "_cfa";
+	static $default = "library";
 	
 	/*
 		The folloiwng is an array, with each key being the
@@ -31,15 +31,15 @@ class PormConfig
 	
 	static $dbs = [
 		//Name of DB
-		"_cfa" => [
+		"library" => [
 			"host" => "localhost", //DB Host
 			"user" => "root", //DB Username
 			"pass" => "", //DB Password
 			"driver" => "mysql", //DB Driver Type
 			"namespace" => "", //Namespace for all classes
 			"tables" => [
-				"Employee" => "teammemberinfo",
-				"RequestOff" => "p_request_off",
+				"Book" => "book",
+				"Publisher" => "publisher",
 			] //List of classes => tables
 		],
 	];

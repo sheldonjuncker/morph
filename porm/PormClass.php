@@ -77,7 +77,7 @@ class PormClass
 			$id = $con->lastInsertId();
 			
 			//Get Created
-			$created = $class::read((int) $id);
+			$created = self::read((int) $id);
 			
 			//Sync
 			foreach($created->fields as $field)
@@ -356,13 +356,13 @@ class PormClass
 		//Unique ID
 		if(is_int($id_sql_arr))
 		{
-			return call_user_func(["Porm\Porm", $porm_func], $con, $start_sql . "WHERE id = ?", [$id_sql_arr], $class);
+			return call_user_func(["Porm", $porm_func], $con, $start_sql . "WHERE id = ?", [$id_sql_arr], $class);
 		}
 		
 		//SQL and Params
 		else if(is_string($id_sql_arr))
 		{
-			return call_user_func(["Porm\Porm", $porm_func], $con, $start_sql . $id_sql_arr, $params, $class);
+			return call_user_func(["Porm", $porm_func], $con, $start_sql . $id_sql_arr, $params, $class);
 		}
 		
 		//Key-Value Array
@@ -370,7 +370,7 @@ class PormClass
 		{
 			$sql = $start_sql . "WHERE 1" .  self::arrayToSQL($id_sql_arr);
 			
-			return call_user_func(["Porm\Porm", $porm_func], $con, $sql, array_values($id_sql_arr), $class);
+			return call_user_func(["Porm", $porm_func], $con, $sql, array_values($id_sql_arr), $class);
 		}
 		
 		//Error
