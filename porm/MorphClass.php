@@ -4,7 +4,7 @@
 	Author:	Sheldon Juncker
 	Date:	4/3/2016
 	Desc:
-	The class PormClass is the class that
+	The class MorphClass is the class that
 	every table object inherits from.
 	It contains all of the required methods
 	for creating, reading, updating, 
@@ -13,7 +13,7 @@
 	It can also perform joined queries
 */
 
-class PormClass
+class MorphClass
 {
 	//Array of Fields for DB
 	public $fields;
@@ -28,7 +28,7 @@ class PormClass
 		Retv:	The result of a PDO statement
 		execution (boolean for success/failure)
 		Desc:	This method creates (INSERTs) a
-		row into the database from the PormClass
+		row into the database from the MorphClass
 		object. If $sync is true, it auto updates
 		the object with the values inserted that
 		wouldn't be available to PHP. (Such as
@@ -38,10 +38,10 @@ class PormClass
 	public function create($sync = true)
 	{
 		//Get Database Connection
-		$con = Porm::getCon($this);
+		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = PormConfig::getFullName($this);
+		$table = MorphConfig::getFullName($this);
 		
 		//SQL
 		$sql = "INSERT INTO $table(";
@@ -68,7 +68,7 @@ class PormClass
 		$sql .= implode(",", $props) . ") VALUES(" . implode(",", $qmarks) . ")";
 		
 		//Statement
-		$result = Porm::executeStatement($con, $sql, $vals);
+		$result = Morph::executeStatement($con, $sql, $vals);
 		
 		//Sync Object with Created One
 		if($sync && $result)
@@ -95,16 +95,16 @@ class PormClass
 		Retv:	The result of a PDO statement
 		execution (boolean for success/failure)
 		Desc:	This method updates a database
-		row from the PormClass object, which
+		row from the MorphClass object, which
 		has presumably been changed.
 	*/
 	public function update()
 	{
 		//Get Database Connection
-		$con = Porm::getCon($this);
+		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = PormConfig::getFullName($this);
+		$table = MorphConfig::getFullName($this);
 		
 		//SQL
 		$sql = "UPDATE $table SET";
@@ -151,7 +151,7 @@ class PormClass
 		$sql .= "WHERE id = ?";
 		
 		//Execute Statement
-		return Porm::executeStatement($con, $sql, $vals);
+		return Morph::executeStatement($con, $sql, $vals);
 	}
 	
 	/*
@@ -165,12 +165,12 @@ class PormClass
 	public function delete()
 	{
 		//Get Database Connection
-		$con = Porm::getCon($this);
+		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = PormConfig::getFullName($this);
+		$table = MorphConfig::getFullName($this);
 		
-		return Porm::executeStatement($con, "DELETE FROM $table WHERE id = ?", [$this->id]);
+		return Morph::executeStatement($con, "DELETE FROM $table WHERE id = ?", [$this->id]);
 	}
 	
 	#Static Methods
@@ -180,14 +180,14 @@ class PormClass
 		Args:	string $sql,
 				array $params = [],
 				array $classes = []
-		Retv:	Returns an array of PormJoin 
+		Retv:	Returns an array of MorphJoin 
 		objects or an empty array on failure
 		Desc:	This function takes a SQL query
 		that joins multiple tables, params to 
-		bind, and the array of PormClass objects
+		bind, and the array of MorphClass objects
 		that are joined. It handles the results
 		in a way that allows the individual
-		PormClass objects to be extracted from
+		MorphClass objects to be extracted from
 		the results.
 	*/
 	static function join($sql, $params = [], $classes = [])
@@ -196,7 +196,7 @@ class PormClass
 		$class = get_called_class();
 		
 		//Get Database Connection
-		$con = Porm::getCon(new $class);
+		$con = Morph::getCon(new $class);
 		
 		//Leading SQL Query
 		$start = "SELECT ";
@@ -209,7 +209,7 @@ class PormClass
 		
 		foreach($classes as $class)
 		{
-			$table = PormConfig::getTableShort($class);
+			$table = MorphConfig::getTableShort($class);
 			
 			$tables[] = "`$table`";
 			
@@ -226,11 +226,11 @@ class PormClass
 		
 		$query = $start . " FROM $tables" . $sql;
 		
-		$results = Porm::readAll($con, $query , $params);
+		$results = Morph::readAll($con, $query , $params);
 		
 		for($i=0; $i < count($results); $i++)
 		{
-			$join = new PormJoin;
+			$join = new MorphJoin;
 			$join->fields = get_object_vars($results[$i]);
 			$results[$i] = $join;
 		}
@@ -253,10 +253,10 @@ class PormClass
 		$class = get_called_class();
 		
 		//Get Database Connection
-		$con = Porm::getCon(new $class);
+		$con = Morph::getCon(new $class);
 		
 		//Read Results
-		return Porm::readAll($con, $sql, $params, $class);
+		return Morph::readAll($con, $sql, $params, $class);
 	}
 	
 	/*
@@ -332,20 +332,20 @@ class PormClass
 		Name:	fetch
 		Args:	string $func, mixed $sql, array $params
 		Retv:	A result set of objects of $this type
-		Desc:	The function used by Porm internally 
-		to fetch results from the Porm class. Not 
+		Desc:	The function used by Morph internally 
+		to fetch results from the Morph class. Not 
 		intended to be used by the user.
 	*/
-	private static function fetch($porm_func, $id_sql_arr, $params = [])
+	private static function fetch($morph_func, $id_sql_arr, $params = [])
 	{
 		//Get Class Name (for static functions)
 		$class = get_called_class();
 		
 		//Get Database Connection
-		$con = Porm::getCon(new $class);
+		$con = Morph::getCon(new $class);
 		
 		//Get Table Name
-		$table = PormConfig::getFullName(new $class);
+		$table = MorphConfig::getFullName(new $class);
 
 		$start_sql = "SELECT * FROM $table ";
 		
@@ -356,13 +356,13 @@ class PormClass
 		//Unique ID
 		if(is_int($id_sql_arr))
 		{
-			return call_user_func(["Porm", $porm_func], $con, $start_sql . "WHERE id = ?", [$id_sql_arr], $class);
+			return call_user_func(["Morph", $morph_func], $con, $start_sql . "WHERE id = ?", [$id_sql_arr], $class);
 		}
 		
 		//SQL and Params
 		else if(is_string($id_sql_arr))
 		{
-			return call_user_func(["Porm", $porm_func], $con, $start_sql . $id_sql_arr, $params, $class);
+			return call_user_func(["Morph", $morph_func], $con, $start_sql . $id_sql_arr, $params, $class);
 		}
 		
 		//Key-Value Array
@@ -370,7 +370,7 @@ class PormClass
 		{
 			$sql = $start_sql . "WHERE 1" .  self::arrayToSQL($id_sql_arr);
 			
-			return call_user_func(["Porm", $porm_func], $con, $sql, array_values($id_sql_arr), $class);
+			return call_user_func(["Morph", $morph_func], $con, $sql, array_values($id_sql_arr), $class);
 		}
 		
 		//Error

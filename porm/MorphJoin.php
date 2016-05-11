@@ -5,22 +5,22 @@
 	Date:	4/3/2016
 	Desc:	
 	This is a class for the results of queries
-	joined with Porm.
+	joined with Morph.
 	
 	The class will hold all of the fields from 
 	a join query and has a get method for getting
 	the data for each joined table as an object.
 */
 
-class PormJoin
+class MorphJoin
 {
 	//Combined table fields from query
 	public $fields = [];
 	
 	/*
 		Name:	get
-		Args:	PormClass $object
-		Retv:	The PormClass $object with filled
+		Args:	MorphClass $object
+		Retv:	The MorphClass $object with filled
 		properties from the joined result.
 		Desc:	The get method is used to extract an 
 		object from a SQL query that joins
@@ -29,7 +29,7 @@ class PormJoin
 	public function get($object)
 	{
 		//Get table name
-		$table = PormConfig::getTableShort($object);
+		$table = MorphConfig::getTableShort($object);
 		
 		//Get the fields that apply to this table
 		foreach($this->fields as $f => $v)

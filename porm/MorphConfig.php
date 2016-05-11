@@ -4,21 +4,21 @@
 	Author:	Sheldon Juncker
 	Date:	5/2/2016
 	Desc:	
-	The PormConfig class which is part of the
-	Porm namespace is used to store the configuration
+	The MorphConfig class which is part of the
+	Morph namespace is used to store the configuration
 	information for all of the database, tables, and
-	classes that are used by Porm.
+	classes that are used by Morph.
 	
 	It is structured as a list of database names, with
 	connection information, namespace information, and
 	a list of classes and their associated tables.
 	
 	Also included are functions for getting the database
-	and table names from a PormClass object.
+	and table names from a MorphClass object.
 */
 
-//The Singleton PormConfig Class
-class PormConfig
+//The Singleton MorphConfig Class
+class MorphConfig
 {
 	//Default Database
 	static $default = "library";
@@ -46,7 +46,7 @@ class PormConfig
 	
 	/*
 		Name:	getTableShort
-		Args:	PormClass $object
+		Args:	MorphClass $object
 		Retv:	string $tableName ("" on failure)
 		Desc:	Returns the table name for an object.
 				In the format of: tablename.
@@ -67,7 +67,7 @@ class PormConfig
 	
 	/*
 		Name:	getDBShort
-		Args:	PormClass $object
+		Args:	MorphClass $object
 		Retv:	string $dbName ("" on failure)
 		Desc:	Returns the db name for an object.
 				In the format of: dbname.
@@ -88,7 +88,7 @@ class PormConfig
 	
 	/*
 		Name:	getFullName
-		Args:	PormClass $object
+		Args:	MorphClass $object
 		Retv:	string $fullTableName ("" on failure)
 		Desc:	Returns the full table name for an object.
 				In the format of: `dbname`.`tablename`.

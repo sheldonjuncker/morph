@@ -4,7 +4,7 @@
 	Author:	Sheldon Juncker
 	Date: 4/3/2016
 	Desc:	
-	The Porm class is the main class used by Porm
+	The Morph class is the main class used by Morph
 	to connect to the databases.
 	
 	This class is primarily used as a singleton,
@@ -30,13 +30,13 @@
 	only one database is being used.
 	
 	There are a variety of functions for working with
-	the db connections that Porm manages. There
-	is one for adding a connection to Porm, one for
-	getting a connection form Porm, and one for
-	getting a connection not managed by Porm.
+	the db connections that Morph manages. There
+	is one for adding a connection to Morph, one for
+	getting a connection form Morph, and one for
+	getting a connection not managed by Morph.
 */
 
-class Porm
+class Morph
 {
 	#Public Properties
 	
@@ -59,16 +59,16 @@ class Porm
 	/*
 		Name:	__construct
 		Args:	string $dbname = false
-		Retv:	Porm $object
+		Retv:	Morph $object
 		Desc:	The constructor accepts a database
-		name and returns a Porm object with that
+		name and returns a Morph object with that
 		db connection. If no dbname is given, it
-		uses the default db specified in PormConfig.
+		uses the default db specified in MorphConfig.
 	*/
 	public function __construct($dbname = "")
 	{
 		//Get default database if not given
-		$dbname = $dbname != "" ? $dbname : PormConfig::$default;
+		$dbname = $dbname != "" ? $dbname : MorphConfig::$default;
 		
 		//Set connection
 		$this->con = self::getPDO($dbname);
@@ -93,11 +93,11 @@ class Porm
 	
 	/*
 		Name:	getCon
-		Args:	PormClass $object | string $dbname
+		Args:	MorphClass $object | string $dbname
 		Retv:	Returns the PDO object or NULL on
 		failure.
 		Desc:	Accepts the name of the db or a
-		PormClass object from which the db name
+		MorphClass object from which the db name
 		is retreived. If the db connection exists,
 		it is returned. If it doesn't exist, it is
 		added and returned. If the $dbname is not
@@ -109,7 +109,7 @@ class Porm
 		//If $name is object, use object's dbname
 		if(is_object($name))
 		{
-			$name = PormConfig::getDBShort($name);
+			$name = MorphConfig::getDBShort($name);
 		}
 		
 		//Get Last Used
@@ -129,12 +129,12 @@ class Porm
 		Retv:	The created connection or NULL
 		on failure.
 		Desc:	Adds the database connection to
-		be managed by Porm.
+		be managed by Morph.
 	*/
 	static function addCon($name)
 	{
 		//If database exists
-		if(isset(PormConfig::$dbs[$name]))
+		if(isset(MorphConfig::$dbs[$name]))
 		{
 			return self::$dbs[$name] = self::getPDO($name);
 		}
@@ -152,7 +152,7 @@ class Porm
 		Retv:	A PDO connection or NULL on failure
 		Desc:	Gets a PDO connection from the name
 		of a database. This connection is not 
-		managed by Porm but can be used at the 
+		managed by Morph but can be used at the 
 		user's discretion. 
 	*/
 	static function getPDO($name = "")
@@ -160,7 +160,7 @@ class Porm
 		//If $name is object, use object's dbname
 		if(is_object($name))
 		{
-			$name = PormConfig::getDBShort($name);
+			$name = MorphConfig::getDBShort($name);
 		}
 		
 		//Last Used
@@ -176,9 +176,9 @@ class Porm
 		}
 		
 		//If database exists
-		if(isset(PormConfig::$dbs[$name]))
+		if(isset(MorphConfig::$dbs[$name]))
 		{
-			$db = PormConfig::$dbs[$name];
+			$db = MorphConfig::$dbs[$name];
 			$con = new \PDO("{$db['driver']}:dbname={$name};host={$db['host']}", $db['user'], $db['pass']);
 			return $con;
 		}
@@ -197,9 +197,9 @@ class Porm
 			string $sql,
 			array $params
 			object $type = 'StdClass'
-		Retv:	An array of PormClass objects
+		Retv:	An array of MorphClass objects
 		or an empty array on failure
-		Desc:	This method is used by the PormClass
+		Desc:	This method is used by the MorphClass
 		objects to read an array of results from
 		the database. Not intended to be used by
 		the user directly.
@@ -232,8 +232,8 @@ class Porm
 			string $sql,
 			array $params
 			object $type = 'StdClass'
-		Retv:	A PormClass object or NULL on failure
-		Desc:	This method is used by the PormClass
+		Retv:	A MorphClass object or NULL on failure
+		Desc:	This method is used by the MorphClass
 		objects to read a single result from
 		the database. Not intended to be used by
 		the user directly.
