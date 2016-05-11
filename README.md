@@ -1,2 +1,2 @@
-# porm
-Porm is a lightweight ORM tool for PHP
+# morph
+Morph is a lightweight ORM-like tool for PHP
