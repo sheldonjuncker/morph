@@ -1,11 +1,11 @@
 <?php
 
-#Include Porm
+#Include Morph
 include 'init.php';
 
 $class = "";
 
-$dbs = array_keys(PormConfig::$dbs);
+$dbs = array_keys(MorphConfig::$dbs);
 
 if(isset($_POST["gen"]))
 {
@@ -13,10 +13,10 @@ if(isset($_POST["gen"]))
 	$table = $_POST["table"];
 	
 	$table_class = ucFirst($table);
-	$code = "class $table_class extends PormClass{\n";
+	$code = "class $table_class extends MorphClass{\n";
 	
-	$porm = new Porm($db);
-	$con = $porm->con;
+	$morph = new Morph($db);
+	$con = $morph->con;
 	
 	$cres = $con->query("SHOW COLUMNS IN `$db`.`$table`");
 			
@@ -48,10 +48,10 @@ if(isset($_POST["gen"]))
 <!doctype html>
 <html>
 <head>
-<title>Generate Porm Classes</title>
+<title>Generate Morph Classes</title>
 </head>
 <body>
-<h1>Generate Porm Classes</h1>
+<h1>Generate Morph Classes</h1>
 <form method="post">
 <h4>Database</h4>
 <select name="db">

@@ -1,7 +1,7 @@
 <?php
 
-#Include Porm Files
-foreach(glob(__DIR__ . "/porm/*.php") as $file)
+#Include Morph Files
+foreach(glob(__DIR__ . "/morph/*.php") as $file)
 {
 	include $file;
 }
