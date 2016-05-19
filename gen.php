@@ -5,8 +5,6 @@ include 'init.php';
 
 $class = "";
 
-$dbs = array_keys(MorphConfig::$dbs);
-
 if(isset($_POST["gen"]))
 {
 	$db = $_POST["db"];
@@ -54,14 +52,7 @@ if(isset($_POST["gen"]))
 <h1>Generate Morph Classes</h1>
 <form method="post">
 <h4>Database</h4>
-<select name="db">
-<?php
-foreach($dbs as $db)
-{
-	print "<option value='$db'>$db</option>";
-}
-?>
-</select>
+<input name="db">
 <h4>Table</h4>
 <input name="table">
 <h4>Generate Class</h4>
