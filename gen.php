@@ -52,7 +52,14 @@ if(isset($_POST["gen"]))
 <h1>Generate Morph Classes</h1>
 <form method="post">
 <h4>Database</h4>
-<input name="db">
+<select name="db">
+<?php
+foreach(MorphConfig::$dbs as $dbname => $dbinfo)
+{
+	print "<option value='$dbname'>$dbname</option>";
+}
+?>
+</select>
 <h4>Table</h4>
 <input name="table">
 <h4>Generate Class</h4>
