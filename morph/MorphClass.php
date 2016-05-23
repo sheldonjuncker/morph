@@ -354,7 +354,7 @@ class MorphClass
 			$id_sql_arr = "WHERE 1";
 		
 		//Unique ID
-		if(is_int($id_sql_arr))
+		if(is_numeric($id_sql_arr))
 		{
 			return call_user_func(["Morph", $morph_func], $con, $start_sql . "WHERE id = ?", [$id_sql_arr], $class);
 		}
