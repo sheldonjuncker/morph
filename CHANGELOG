@@ -6,4 +6,11 @@ would not work, whereas
 	Book::read(1);
 would. The expression was previously parsed with is_int() but it now uses is_numeric(). 
 
+2. Fixed issue where single elements to bind still had to be placed inside of an array. For example:
+	Book::read("WHERE year=?", [1994]);
+can now be written as:
+	Book::read("WHERE year=?", 1994);
+
+
+	
 ==========
