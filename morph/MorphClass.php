@@ -362,6 +362,12 @@ class MorphClass
 		//SQL and Params
 		else if(is_string($id_sql_arr))
 		{
+			//Allow single parameter to bind
+			if(!is_array($params))
+			{
+				$params = [$params];
+			}
+			
 			return call_user_func(["Morph", $morph_func], $con, $start_sql . $id_sql_arr, $params, $class);
 		}
 		
