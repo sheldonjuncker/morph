@@ -1,6 +1,9 @@
+Version 0.6.6 (beta) Changelog
+==========
 1. Fixed a bug when reading results by a unique identifier. For example:
 	Book::read("1");
 would not work, whereas
 	Book::read(1);
 would. The expression was previously parsed with is_int() but it now uses is_numeric(). 
 
+==========
