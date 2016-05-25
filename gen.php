@@ -11,7 +11,7 @@ if(isset($_POST["gen"]))
 	$table = $_POST["table"];
 	
 	$table_class = ucFirst($table);
-	$code = "class $table_class extends MorphClass{\n";
+	$code = "class $table_class extends MorphClass{\n\n\t#Stuff used by Morph\n\n\tpublic static \$dbName = '$db';\n\tpublic static \$tableName = '$table';\n";
 	
 	$morph = new Morph($db);
 	$con = $morph->con;
@@ -28,7 +28,9 @@ if(isset($_POST["gen"]))
 			$code .= "\tpublic \${$name} = false;\n";
 		}
 		
-		$code .= "\tpublic \$fields = [" . implode(',',  $columns) . "];\n";
+		$code .= "\tpublic \$fields = [" . implode(', ',  $columns) . "];\n";
+		
+		$code .= "\n\t#Other stuff\n\n";
 		
 		$code .= "}\n";
 		
@@ -67,7 +69,8 @@ foreach(MorphConfig::$dbs as $dbname => $dbinfo)
 </form>
 <hr>
 <?php
-print "<pre>" . $class . "</pre>";
+print "<pre class='prettyprint'>" . $class . "</pre>";
 ?>
 </body>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </html>

@@ -29,7 +29,7 @@ class MorphJoin
 	public function get($object)
 	{
 		//Get table name
-		$table = MorphConfig::getTableShort($object);
+		$table = $object::tableName;
 		
 		//Get the fields that apply to this table
 		foreach($this->fields as $f => $v)

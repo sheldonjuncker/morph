@@ -11,6 +11,16 @@ would. The expression was previously parsed with is_int() but it now uses is_num
 can now be written as:
 	Book::read("WHERE year=?", 1994);
 
+3. Changed the structure of the PormConfig and PormClass classes so that the database and table info is stored in the PormClass objects.  Each PormClass now has a $tableName and $dbName field as well as a getFullName() function which works just as the old one did.
+For example:
+	$name = PormConfig::getFullName($user);
+is now written as:
+	$name = $user::getFullName();
+Similarly:
+	$dbName = PormConfig::getDBShort($user);
+becomes:
+	$dbName = $user::dbName;
+This change also removes the need to store class/table mappings in the PormConfig class. Also, the namespaces field has also become unnecesasry and has been removed.
 
-	
+4. Improved the way classes are genereated by the gen.php script. The db/table info is now included and the output is better formatted. 
 ==========

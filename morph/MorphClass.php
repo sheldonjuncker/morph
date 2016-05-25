@@ -18,7 +18,23 @@ class MorphClass
 	//Array of Fields for DB
 	public $fields;
 	
+	//Name of Database and Table associated with Class
+	public static $dbName, $tableName;
+	
 	#Non-static Public Methods
+	
+	/*
+		Name:	getFullName
+		Args:	void
+		Retv:	string $fullTableName
+		Desc:	Returns the full table name for an object.
+				In the format of: `dbname`.`tablename`
+	*/
+	static function getFullName()
+	{
+		return '`' . self::dbName . '`.`' . self::tableName . '`';
+	}
+	
 	
 	#CRUD Methods
 	
@@ -41,7 +57,7 @@ class MorphClass
 		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = MorphConfig::getFullName($this);
+		$table = $this::getFullName();
 		
 		//SQL
 		$sql = "INSERT INTO $table(";
@@ -104,7 +120,7 @@ class MorphClass
 		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = MorphConfig::getFullName($this);
+		$table = $this::getFullName();
 		
 		//SQL
 		$sql = "UPDATE $table SET";
@@ -168,7 +184,7 @@ class MorphClass
 		$con = Morph::getCon($this);
 		
 		//Get Table Name
-		$table = MorphConfig::getFullName($this);
+		$table = $this::getFullName();
 		
 		return Morph::executeStatement($con, "DELETE FROM $table WHERE id = ?", [$this->id]);
 	}
@@ -209,7 +225,7 @@ class MorphClass
 		
 		foreach($classes as $class)
 		{
-			$table = MorphConfig::getTableShort($class);
+			$table = $class::tableName;
 			
 			$tables[] = "`$table`";
 			
@@ -345,7 +361,7 @@ class MorphClass
 		$con = Morph::getCon(new $class);
 		
 		//Get Table Name
-		$table = MorphConfig::getFullName(new $class);
+		$table = $class::getFullName();
 
 		$start_sql = "SELECT * FROM $table ";
 		

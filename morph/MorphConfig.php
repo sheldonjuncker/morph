@@ -36,55 +36,8 @@ class MorphConfig
 			"user" => "root", //DB Username
 			"pass" => "", //DB Password
 			"driver" => "mysql", //DB Driver Type
-			"namespace" => "", //Namespace for all classes
-			"tables" => [
-				"Book" => "book",
-				"Publisher" => "publisher",
-			] //List of classes => tables
 		],
 	];
-	
-	/*
-		Name:	getTableShort
-		Args:	MorphClass $object
-		Retv:	string $tableName ("" on failure)
-		Desc:	Returns the table name for an object.
-				In the format of: tablename.
-				On error, returns "";
-	*/
-	static function getTableShort($object)
-	{
-		//Loop through all DBs
-		foreach(self::$dbs as $db)
-			//Loop thorugh all Tables
-			foreach($db["tables"] as $class => $table)
-				//Test for match
-				if(get_class($object) == ($db["namespace"] ? $db["namespace"] . "\\" . $class : $class))
-					return $table;
-		//Table not found
-		return "";
-	}
-	
-	/*
-		Name:	getDBShort
-		Args:	MorphClass $object
-		Retv:	string $dbName ("" on failure)
-		Desc:	Returns the db name for an object.
-				In the format of: dbname.
-				On error, returns "";
-	*/
-	static function getDBShort($object)
-	{
-		//Loop through all DBs
-		foreach(self::$dbs as $dbname => $db)
-			//Loop thorugh all Tables
-			foreach($db["tables"] as $class => $table)
-				//Test for match
-				if(get_class($object) == ($db["namespace"] ? $db["namespace"] . "\\" . $class : $class))
-					return $dbname;
-		//DB not found
-		return "";
-	}
 	
 	/*
 		Name:	getFullName

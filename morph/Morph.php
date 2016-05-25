@@ -109,7 +109,7 @@ class Morph
 		//If $name is object, use object's dbname
 		if(is_object($name))
 		{
-			$name = MorphConfig::getDBShort($name);
+			$name = $name::dbName;
 		}
 		
 		//Get Last Used
@@ -160,7 +160,7 @@ class Morph
 		//If $name is object, use object's dbname
 		if(is_object($name))
 		{
-			$name = MorphConfig::getDBShort($name);
+			$name = $name::dbName;
 		}
 		
 		//Last Used
