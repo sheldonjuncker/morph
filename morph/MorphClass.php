@@ -32,7 +32,7 @@ class MorphClass
 	*/
 	static function getFullName()
 	{
-		return '`' . self::dbName . '`.`' . self::tableName . '`';
+		return '`' . self::$dbName . '`.`' . self::$tableName . '`';
 	}
 	
 	
@@ -225,7 +225,7 @@ class MorphClass
 		
 		foreach($classes as $class)
 		{
-			$table = $class::tableName;
+			$table = $class::$tableName;
 			
 			$tables[] = "`$table`";
 			
