@@ -22,5 +22,7 @@ becomes:
 	$dbName = $user::dbName;
 This change also removes the need to store class/table mappings in the PormConfig class. Also, the namespaces field has also become unnecesasry and has been removed.
 
-4. Improved the way classes are genereated by the gen.php script. The db/table info is now included and the output is better formatted. 
+4. Improved the way classes are genereated by the gen.php script. The db/table info is now included and the output is better formatted.
+
+5. Added a test.php script which runs some really simple tests making sure that Morph can connect; create tables; and create, read, update, and delete rows. It cleans up after itself. 
 ==========
