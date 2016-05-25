@@ -12,9 +12,6 @@
 	It is structured as a list of database names, with
 	connection information, namespace information, and
 	a list of classes and their associated tables.
-	
-	Also included are functions for getting the database
-	and table names from a MorphClass object.
 */
 
 //The Singleton MorphConfig Class
@@ -38,25 +35,6 @@ class MorphConfig
 			"driver" => "mysql", //DB Driver Type
 		],
 	];
-	
-	/*
-		Name:	getFullName
-		Args:	MorphClass $object
-		Retv:	string $fullTableName ("" on failure)
-		Desc:	Returns the full table name for an object.
-				In the format of: `dbname`.`tablename`.
-	*/
-	static function getFullName($object)
-	{
-		$db = self::getDBShort($object);
-		$table = self::getTableShort($object);
-		
-		if($db == "" || $table == "")
-			return "";
-		
-		else
-			return "`$db`.`$table`";
-	}
 };
 
 ?>
