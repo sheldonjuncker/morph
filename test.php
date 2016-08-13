@@ -43,15 +43,21 @@ $default = MorphConfig::$default;
 //Create dummy class
 class MorphTest extends MorphClass
 {
+	public $dbName;
+	public $tableName = "_MorphTest_1994";
 	public $id;
 	public $name;
 	public $fields = ['id', 'name'];
+	
+	public function __construct()
+	{
+		$this->dbName = $GLOBALS["default"];
+	}
 }
 
 //Create and set table/db info
 $test = new MorphTest;
-$test::$dbName = $default;
-$test::$tableName = "_MorphTest_1994";
+$test->dbName = $default;
 
 //Test connection
 try
